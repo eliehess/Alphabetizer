@@ -16,20 +16,13 @@ public class Controller {
     @FXML
     private void alphabetize() {
         String text = preTextArea.getText();
-        List<Card> cards = new ArrayList<>();
+        List<Card> cards = makeCards(text);
 
-        List<String> splitInput = splitByLine(text);
-        if(splitInput == null) return;
-
-        for(String s : splitInput) {
-            //System.out.println(s);
-            cards.add(inputToCard(s));
-        }
-
+        if (cards == null) return;
         Collections.sort(cards);
 
         String fin = "";
-        for(Card c : cards)
+        for (Card c : cards)
             fin += (c.toString() + '\n');
 
         postTextArea.setText(fin);
@@ -50,40 +43,36 @@ public class Controller {
         }
     }
 
-    private static List<String> splitByLine(String input) {
-        List<String> fin = new ArrayList<>();
+    private static List<Card> makeCards(String text) {
+        List<Card> fin = new ArrayList<>();
 
-        final String delimiter = "!";
-        if (input.contains(delimiter)) return null;
+        final String splitDelim = "!";
+        if (text.contains(splitDelim)) return null;
 
-        String replaced =  input.replaceAll("\\r", "").replaceAll("\\n", delimiter);
+        String replaced = text.replaceAll("\\r", "").replaceAll("\\n", splitDelim);
 
-        StringTokenizer strtok = new StringTokenizer(replaced, delimiter);
+        StringTokenizer strtok = new StringTokenizer(replaced, splitDelim);
 
-        while(strtok.hasMoreTokens())
-            fin.add(strtok.nextToken());
+        while (strtok.hasMoreTokens()) {
+            String str = strtok.nextToken();
+            Card card = new Card();
 
-        return fin;
-    }
+            final int cardDelim = str.indexOf(" ");
 
-    private static Card inputToCard(String input) {
-        Card fin = new Card();
-        int delimiter = input.indexOf(" ");
+            String cardNum = str.substring(0, cardDelim);
+            if (cardNum.substring(cardNum.length() - 1).equals("x"))
+                cardNum = cardNum.substring(0, cardNum.length() - 1);
 
-        String num = input.substring(0, delimiter);
-        if(num.substring(num.length() - 1).equals("x"))
-            num = num.substring(0, num.length() - 1);
+            try {
+                card.quantity = Integer.parseInt(cardNum);
+            } catch (NumberFormatException e) {
+                System.out.println("NumberFormatException detected: " + e);
+                return null;
+            }
 
-        String cardname = input.substring(1 + delimiter);
-
-        try {
-            fin.quantity = Integer.parseInt(num);
-        } catch (NumberFormatException e) {
-            System.out.println("NumberFormatException detected: " + e);
-            return null;
+            card.name = str.substring(1 + cardDelim);
+            fin.add(card);
         }
-
-        fin.name = cardname;
 
         return fin;
     }
