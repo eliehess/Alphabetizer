@@ -4,14 +4,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
-import java.io.IOException;
 import java.net.URL;
 
 public final class Main extends Application {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 550 + 24;
-    private static Stage stage;
-    private static URL scene;
 
     public static void main(String[] args) {
         launch(args);
@@ -19,25 +16,21 @@ public final class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
-        stage.setResizable(false);
-        stage.setMaxHeight(HEIGHT);
-        stage.setMinHeight(HEIGHT);
-        stage.setMaxWidth(WIDTH);
-        stage.setMinWidth(WIDTH);
-        scene = getClass().getResource("/Main.fxml");
-        loadMain();
-        stage.show();
+        URL scene = getClass().getResource("/Main.fxml");
+        Parent loadingRoot = FXMLLoader.load(scene);
+
+        primaryStage.setResizable(false);
+        primaryStage.setMaxHeight(HEIGHT);
+        primaryStage.setMinHeight(HEIGHT);
+        primaryStage.setMaxWidth(WIDTH);
+        primaryStage.setMinWidth(WIDTH);
+        primaryStage.setTitle("Alphabetizer");
+        primaryStage.setScene(new Scene(loadingRoot));
+        primaryStage.show();
     }
 
     @Override
     public void stop() {
         System.exit(0);
-    }
-
-    private void loadMain() throws IOException {
-        Parent loadingRoot = FXMLLoader.load(scene);
-        stage.setTitle("Alphabetizer");
-        stage.setScene(new Scene(loadingRoot));
     }
 }
