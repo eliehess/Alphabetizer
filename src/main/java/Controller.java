@@ -18,20 +18,19 @@ public class Controller {
         String text = preTextArea.getText();
         List<Card> cards = new ArrayList<>();
 
-        final String splitDelim = "!";
-        if (text.contains(splitDelim)) return;
+        final String delimiter = "!";
+        if (text.contains(delimiter)) return;
 
-        String replaced = text.replaceAll("\\r", "").replaceAll("\\n", splitDelim);
+        StringTokenizer tokens = new StringTokenizer(text.replaceAll("\\r", "")
+                .replaceAll("\\n", delimiter), delimiter);
 
-        StringTokenizer strtok = new StringTokenizer(replaced, splitDelim);
-
-        while (strtok.hasMoreTokens()) {
-            String str = strtok.nextToken();
+        while (tokens.hasMoreTokens()) {
+            String str = tokens.nextToken();
             Card card = new Card();
 
-            final int cardDelim = str.indexOf(" ");
+            final int splitPoint = str.indexOf(" ");
 
-            String cardNum = str.substring(0, cardDelim);
+            String cardNum = str.substring(0, splitPoint);
             if (cardNum.substring(cardNum.length() - 1).equals("x"))
                 cardNum = cardNum.substring(0, cardNum.length() - 1);
 
@@ -42,17 +41,14 @@ public class Controller {
                 return;
             }
 
-            card.name = str.substring(1 + cardDelim);
+            card.name = str.substring(1 + splitPoint);
             cards.add(card);
         }
 
         Collections.sort(cards);
 
-        String fin = "";
-        for (Card c : cards)
-            fin += (c.toString() + '\n');
-
-        postTextArea.setText(fin);
+        postTextArea.setText("");
+        cards.forEach(card -> postTextArea.appendText(card + "\n"));
     }
 
     private static class Card implements Comparable<Card> {
@@ -66,7 +62,7 @@ public class Controller {
 
         @Override
         public int compareTo(Card c) {
-            return name.compareTo(c.name);
+            return name.compareTo(c.name) == 0 ? quantity - c.quantity : name.compareTo(c.name);
         }
     }
 }
