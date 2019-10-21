@@ -10,6 +10,8 @@ Your input will be condensed and alphabetized by card name, then displayed in th
 - Cards must be separated by new lines, and each entry must contain the number of cards, an optional 'x', a space, and the card name.
 Assuming the rest of the line is formatted correctly, everything after the number, 'x', and space is treated as part of the card name.
 
+- If one line is invalid, the rest of the input should process normally. *The exception is that no line may contain an ampersand ('&'), as ampersands are used as part of the sorting process.*
+
 - Examples of valid input:
 
   - >4 Saheeli Rai<br>
@@ -34,12 +36,14 @@ Assuming the rest of the line is formatted correctly, everything after the numbe
   - >4xSaheeli Rai<br>
     4xTeferi, Time Raveler<br>
     3xFelidar Guardian
+  
+  - >4X Saheeli Rai<br>
+     4X Teferi, Time Raveler<br>
+     3X Felidar Guardian
       
   - >Saheeli Rai 4<br>
     Teferi, Time Raveler 4<br>
     Felidar Guardian 3
-
-- If one line is invalid, the rest of the input should process normally. The exception is that no line may contain an ampersand ('&'), as ampersands are used as part of the sorting process.
 
 <h3>Clipboard</h3>
 - The application has built-in functionality to copy from, and paste to, the system clipboard with the press of a button. <br>
