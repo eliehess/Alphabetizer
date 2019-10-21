@@ -39,7 +39,16 @@ public class Controller {
      */
     @FXML
     private void pasteFromClipboard() {
-        preTextArea.setText(getClipboardContents());
+        Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+        if (contents == null) return;
+
+        if (contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+            try {
+                preTextArea.setText((String) contents.getTransferData(DataFlavor.stringFlavor));
+            } catch (UnsupportedFlavorException | IOException e) {
+                System.out.println("Exception detected: " + e);
+            }
+        }
     }
 
     /**
@@ -47,7 +56,8 @@ public class Controller {
      */
     @FXML
     private void copyToClipboard() {
-        sendToClipboard(postTextArea.getText());
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+                new StringSelection(postTextArea.getText()), null);
     }
 
     /**
@@ -70,8 +80,8 @@ public class Controller {
     }
 
     private static class Card implements Comparable<Card> {
-        String name;
-        int quantity;
+        final String name;
+        final int quantity;
 
         Card(String name, int quantity) {
             this.name = name;
@@ -128,34 +138,6 @@ public class Controller {
         }
 
         return mergeSort(fin);
-    }
-
-    /**
-     * Returns the contents of the system clipboard if it can be parsed into a Java String
-     * @return the contents of the system clipboard
-     */
-    private static String getClipboardContents() {
-        String fin = "";
-        Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
-        if (contents == null) return null;
-
-        if (contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-            try {
-                fin = (String) contents.getTransferData(DataFlavor.stringFlavor);
-            } catch (UnsupportedFlavorException | IOException e) {
-                System.out.println("Exception detected: " + e);
-                return null;
-            }
-        }
-        return fin;
-    }
-
-    /**
-     * Copies a string to the system clipboard.
-     * @param str the string to be copied to the system clipboard.
-     */
-    private static void sendToClipboard(String str) {
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(str), null);
     }
 
     /**
