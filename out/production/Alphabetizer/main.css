@@ -4,10 +4,6 @@
     -fx-prompt-text-fill: rgba(64, 64, 64, 1);
 }
 
-.text-area .scroll-pane {
-    -fx-background-color: transparent;
-}
-
 .text-area .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
