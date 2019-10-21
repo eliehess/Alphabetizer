@@ -24,13 +24,59 @@ public class Controller {
 
     @FXML
     private void alphabetize() {
-        String text = preTextArea.getText();
-        List<Card> cards = new ArrayList<>();
+        List<Card> cards = stringToAlphabetizedCards(preTextArea.getText());
+
+        if(cards == null) return;
+
+        postTextArea.setText("");
+        cards.forEach(card -> postTextArea.appendText(card + "\n"));
+    }
+
+    @FXML
+    private void pasteFromClipboard() {
+        preTextArea.setText(getClipboardContents());
+    }
+
+    @FXML
+    private void copyToClipboard() {
+        sendToClipboard(postTextArea.getText());
+    }
+
+    @FXML
+    private void clipboardPivot() {
+        List<Card> cards = stringToAlphabetizedCards(getClipboardContents());
+
+        if(cards == null) return;
+
+        String fin = "";
+        for(Card card : cards)
+            fin += card + "\n";
+
+        sendToClipboard(fin);
+    }
+
+    private static class Card implements Comparable<Card> {
+        String name;
+        int quantity;
+
+        @Override
+        public String toString() {
+            return quantity + " " + name;
+        }
+
+        @Override
+        public int compareTo(Card c) {
+            return name.compareTo(c.name) == 0 ? quantity - c.quantity : name.compareTo(c.name);
+        }
+    }
+
+    private static List<Card> stringToAlphabetizedCards(String input) {
+        List<Card> fin = new ArrayList<>();
 
         final String delimiter = "!";
-        if (text.contains(delimiter)) return;
+        if (input.contains(delimiter)) return null;
 
-        StringTokenizer tokens = new StringTokenizer(text.replaceAll("\\r", "")
+        StringTokenizer tokens = new StringTokenizer(input.replaceAll("\\r", "")
                 .replaceAll("\\n", delimiter), delimiter);
 
         while (tokens.hasMoreTokens()) {
@@ -47,59 +93,35 @@ public class Controller {
                 card.quantity = Integer.parseInt(cardNum);
             } catch (NumberFormatException e) {
                 System.out.println("NumberFormatException detected: " + e);
-                return;
+                return null;
             }
 
             card.name = str.substring(1 + splitPoint);
-            cards.add(card);
+            fin.add(card);
         }
 
-        Collections.sort(cards);
-
-        postTextArea.setText("");
-        cards.forEach(card -> postTextArea.appendText(card + "\n"));
+        Collections.sort(fin);
+        return fin;
     }
 
-    @FXML
-    private void pasteFromClipboard() {
-        String result = "";
+    private static String getClipboardContents() {
+        String fin = "";
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         Transferable contents = clipboard.getContents(null);
 
         if ((contents != null) && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
             try {
-                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+                fin = (String) contents.getTransferData(DataFlavor.stringFlavor);
             } catch (UnsupportedFlavorException | IOException ex) {
                 System.out.println("Exception detected: " + ex);
             }
         }
-        preTextArea.setText(result);
+        return fin;
     }
 
-    @FXML
-    private void copyToClipboard() {
-        StringSelection stringSelection = new StringSelection(postTextArea.getText());
+    private static void sendToClipboard(String str) {
+        StringSelection stringSelection = new StringSelection(str);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
-    }
-
-    @FXML
-    private void clipboardPivot() {
-
-    }
-
-    private static class Card implements Comparable<Card> {
-        String name;
-        int quantity;
-
-        @Override
-        public String toString() {
-            return quantity + " " + name;
-        }
-
-        @Override
-        public int compareTo(Card c) {
-            return name.compareTo(c.name) == 0 ? quantity - c.quantity : name.compareTo(c.name);
-        }
     }
 }
