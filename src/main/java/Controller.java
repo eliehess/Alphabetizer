@@ -26,7 +26,7 @@ public class Controller {
     private void alphabetize() {
         List<Card> cards = stringToAlphabetizedCards(preTextArea.getText());
 
-        if(cards == null) return;
+        if (cards == null) return;
 
         postTextArea.setText("");
         cards.forEach(card -> postTextArea.appendText(card + "\n"));
@@ -46,10 +46,10 @@ public class Controller {
     private void clipboardPivot() {
         List<Card> cards = stringToAlphabetizedCards(getClipboardContents());
 
-        if(cards == null) return;
+        if (cards == null) return;
 
         String fin = "";
-        for(Card card : cards)
+        for (Card card : cards)
             fin += card + "\n";
 
         sendToClipboard(fin);
@@ -73,7 +73,7 @@ public class Controller {
     private static List<Card> stringToAlphabetizedCards(String input) {
         List<Card> fin = new ArrayList<>();
 
-        final String delimiter = "!";
+        final String delimiter = "&";
         if (input.contains(delimiter)) return null;
 
         StringTokenizer tokens = new StringTokenizer(input.replaceAll("\\r", "")
@@ -84,6 +84,8 @@ public class Controller {
             Card card = new Card();
 
             final int splitPoint = str.indexOf(" ");
+            if (splitPoint <= 0)
+                continue;
 
             String cardNum = str.substring(0, splitPoint);
             if (cardNum.substring(cardNum.length() - 1).equals("x"))
@@ -93,7 +95,7 @@ public class Controller {
                 card.quantity = Integer.parseInt(cardNum);
             } catch (NumberFormatException e) {
                 System.out.println("NumberFormatException detected: " + e);
-                return null;
+                continue;
             }
 
             card.name = str.substring(1 + splitPoint);
@@ -101,10 +103,10 @@ public class Controller {
         }
 
         Collections.sort(fin);
-        for(int i = 0; i < fin.size() - 1; i++) {
+        for (int i = 0; i < fin.size() - 1; i++) {
             Card curCard = fin.get(i);
             Card nextCard = fin.get(i + 1);
-            if(curCard.name.equals(nextCard.name)) {
+            if (curCard.name.equals(nextCard.name)) {
                 curCard.quantity += nextCard.quantity;
                 fin.remove(i + 1);
             }
