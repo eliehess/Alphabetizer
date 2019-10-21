@@ -9,7 +9,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -58,6 +57,11 @@ public class Controller {
         String name;
         int quantity;
 
+        Card(String name, int quantity) {
+            this.name = name;
+            this.quantity = quantity;
+        }
+
         @Override
         public String toString() {
             return quantity + " " + name;
@@ -65,8 +69,7 @@ public class Controller {
 
         @Override
         public int compareTo(Card otherCard) {
-            int compareName = name.compareTo(otherCard.name);
-            return compareName == 0 ? quantity - otherCard.quantity : compareName;
+            return name.compareTo(otherCard.name);
         }
     }
 
@@ -81,7 +84,8 @@ public class Controller {
 
         while (tokens.hasMoreTokens()) {
             String str = tokens.nextToken();
-            Card card = new Card();
+            int quantity;
+            String name;
 
             final int splitPoint = str.indexOf(" ");
             if (splitPoint <= 0)
@@ -92,16 +96,16 @@ public class Controller {
                 cardNum = cardNum.substring(0, cardNum.length() - 1);
 
             try {
-                card.quantity = Integer.parseInt(cardNum);
+                quantity = Integer.parseInt(cardNum);
             } catch (NumberFormatException e) {
                 System.out.println("NumberFormatException detected: " + e);
                 continue;
             }
 
-            card.name = str.substring(1 + splitPoint);
-            fin.add(card);
+            name = str.substring(1 + splitPoint);
+            fin.add(new Card(name, quantity));
         }
-        
+
         fin = mergeSort(fin);
         for (int i = 0; i < fin.size() - 1; i++) {
             Card curCard = fin.get(i);
@@ -134,33 +138,55 @@ public class Controller {
     }
 
     private static List<Card> mergeSort(List<Card> cards) {
-        if (cards.size() >= 2) {
-            int leftSize = cards.size() / 2;
-            int rightSize = cards.size() - leftSize;
-            List<Card> left = new ArrayList<>();
-            List<Card> right = new ArrayList<>();
+        if (cards.size() < 2) return cards;
 
-            for (int i = 0; i < leftSize; i++)
-                left.add(cards.get(i));
+        int leftSize = cards.size() / 2;
+        int rightSize = cards.size() - leftSize;
+        List<Card> leftList = new ArrayList<>();
+        List<Card> rightList = new ArrayList<>();
 
-            for (int i = 0; i < rightSize; i++)
-                right.add(cards.get(i + leftSize));
+        for (int i = 0; i < leftSize; i++)
+            leftList.add(cards.get(i));
 
-            return merge(mergeSort(left), mergeSort(right));
-        } else return cards;
+        for (int i = 0; i < rightSize; i++)
+            rightList.add(cards.get(i + leftSize));
+
+        return merge(mergeSort(leftList), mergeSort(rightList));
     }
 
-    private static List<Card> merge(List<Card> left, List<Card> right) {
+    private static List<Card> merge(List<Card> leftList, List<Card> rightList) {
+        if (leftList == null) return rightList;
+        if (rightList == null) return leftList;
+
         List<Card> fin = new ArrayList<>();
-        int a = 0;
-        int b = 0;
-        for (int i = 0; i < (left.size() + right.size()); i++) {
-            if (b >= right.size() || (a < left.size() && left.get(a).compareTo(right.get(b)) < 0)) {
-                fin.add(left.get(a));
-                a++;
+        int leftCounter = 0;
+        int rightCounter = 0;
+        int leftSize = leftList.size();
+        int rightSize = rightList.size();
+        for (int i = 0; i < (leftSize + rightSize); i++) {
+            if (rightCounter >= rightSize && leftCounter >= leftSize) {
+                break;
+            } else if (rightCounter >= rightSize) {
+                fin.add(leftList.get(leftCounter));
+                leftCounter++;
+            } else if (leftCounter >= leftSize) {
+                fin.add(rightList.get(rightCounter));
+                rightCounter++;
             } else {
-                fin.add(right.get(b));
-                b++;
+                Card leftElement = leftList.get(leftCounter);
+                Card rightElement = rightList.get(rightCounter);
+                int compare = leftElement.compareTo(rightElement);
+                if (compare == 0) {
+                    fin.add(new Card(leftElement.name, leftElement.quantity + rightElement.quantity));
+                    leftCounter++;
+                    rightCounter++;
+                } else if (compare < 0) {
+                    fin.add(leftElement);
+                    leftCounter++;
+                } else {
+                    fin.add(rightElement);
+                    rightCounter++;
+                }
             }
         }
         return fin;
