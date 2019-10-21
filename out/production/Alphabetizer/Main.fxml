@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import java.net.URL?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0"
             prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="Controller">
@@ -26,9 +27,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
         </rowConstraints>
         <TextArea fx:id="preTextArea" prefHeight="200.0" prefWidth="200.0" promptText="Enter text to alphabetize"
-                  stylesheets="@main.css" GridPane.columnIndex="1"/>
+                  GridPane.columnIndex="1"/>
         <TextArea fx:id="postTextArea" editable="false" prefHeight="200.0" prefWidth="200.0"
-                  promptText="Alphabetized text will appear here" stylesheets="@main.css" GridPane.columnIndex="2"/>
+                  promptText="Alphabetized text will appear here" GridPane.columnIndex="2"/>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                   GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <columnConstraints>
@@ -43,7 +44,7 @@
             </rowConstraints>
             <Button fx:id="alphabetizeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                     minWidth="-Infinity" mnemonicParsing="false" onAction="#alphabetize" prefHeight="25.0"
-                    prefWidth="80.0" stylesheets="@main.css" text="Alphabetize" GridPane.halignment="CENTER"
+                    prefWidth="80.0" text="Alphabetize" GridPane.halignment="CENTER"
                     GridPane.valignment="CENTER"/>
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                     mnemonicParsing="false" onAction="#pasteFromClipboard" prefHeight="25.0" prefWidth="130.0"
@@ -62,4 +63,7 @@
                     GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER"/>
         </GridPane>
     </GridPane>
+    <stylesheets>
+        <URL value="@main.css"/>
+    </stylesheets>
 </AnchorPane>
