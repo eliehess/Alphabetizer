@@ -56,8 +56,10 @@ public class Controller {
      */
     @FXML
     private void copyToClipboard() {
+        String text = postTextArea.getText();
+        if (text == null || text.trim().length() < 1) return;
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
-                new StringSelection(postTextArea.getText()), null);
+                new StringSelection(text), null);
     }
 
     /**
@@ -101,6 +103,7 @@ public class Controller {
 
     /**
      * Parses a String into a List of Cards, then alphabetizes the list and merges duplicate entries.
+     *
      * @param input the String to be parsed and alphabetized.
      * @return an alphabetized List.
      */
@@ -142,6 +145,7 @@ public class Controller {
 
     /**
      * Sorts a list of Cards using a mergesort algorithm.
+     *
      * @param cards the list of Cards to be sorted.
      * @return the sorted list.
      */
