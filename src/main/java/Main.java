@@ -7,8 +7,8 @@ import javafx.application.Application;
 import java.net.URL;
 
 public final class Main extends Application {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 550 + 24;
+    private static final int WIDTH = 750;
+    private static final int HEIGHT = 516 + 24;
 
     public static void main(String[] args) {
         launch(args);

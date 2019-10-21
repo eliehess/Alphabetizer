@@ -1,6 +1,14 @@
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +16,7 @@ import java.util.StringTokenizer;
 
 public class Controller {
 
+    public Button alphabetizeButton;
     @FXML
     private TextArea postTextArea;
     @FXML
@@ -49,6 +58,34 @@ public class Controller {
 
         postTextArea.setText("");
         cards.forEach(card -> postTextArea.appendText(card + "\n"));
+    }
+
+    @FXML
+    private void pasteFromClipboard() {
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable contents = clipboard.getContents(null);
+
+        if ((contents != null) && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+            try {
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException | IOException ex) {
+                System.out.println("Exception detected: " + ex);
+            }
+        }
+        preTextArea.setText(result);
+    }
+
+    @FXML
+    private void copyToClipboard() {
+        StringSelection stringSelection = new StringSelection(postTextArea.getText());
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+
+    @FXML
+    private void clipboardPivot() {
+
     }
 
     private static class Card implements Comparable<Card> {

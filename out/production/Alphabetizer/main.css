@@ -1,18 +1,22 @@
 .text-area {
-    -fx-border-color: rgba(0,0,0,1);
-    -fx-background-color: rgba(53,89,119,0.4);
-    -fx-prompt-text-fill: rgba(64,64,64,1);
+    -fx-border-color: rgba(0, 0, 0, 1);
+    -fx-background-color: rgba(53, 89, 119, 0.4);
+    -fx-prompt-text-fill: rgba(64, 64, 64, 1);
 }
 
 .text-area .scroll-pane {
     -fx-background-color: transparent;
 }
 
-.text-area .scroll-pane .viewport{
+.text-area .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
 
 
-.text-area .scroll-pane .content{
+.text-area .scroll-pane .content {
     -fx-background-color: transparent;
+}
+
+#alphabetizeButton {
+    -fx-background-color: #159633;
 }
