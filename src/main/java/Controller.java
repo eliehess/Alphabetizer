@@ -101,6 +101,14 @@ public class Controller {
         }
 
         Collections.sort(fin);
+        for(int i = 0; i < fin.size() - 1; i++) {
+            Card curCard = fin.get(i);
+            Card nextCard = fin.get(i + 1);
+            if(curCard.name.equals(nextCard.name)) {
+                curCard.quantity += nextCard.quantity;
+                fin.remove(i + 1);
+            }
+        }
         return fin;
     }
 
