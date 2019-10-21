@@ -12,6 +12,7 @@ import java.util.StringTokenizer;
 
 public final class Main {
     private static List<String> errorLog;
+    private static String output = null;
 
     public static void main(String[] args) {
         errorLog = new ArrayList<>();
@@ -33,15 +34,23 @@ public final class Main {
 
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
                 new StringSelection(text), null);
+        output = text;
         printLog();
     }
 
+    /**
+     * If any error messages are stored in the log, output them to a new file called "log.txt".
+     */
     private static void printLog() {
         if (errorLog.size() < 1) return;
         try {
             String str = "";
             for (String logStr : errorLog)
                 str += logStr + "\n";
+            if (output == null)
+                str += "NO CHANGES MADE TO CLIPBOARD";
+            else
+                str += "Current clipboard contents:\n" + output;
             BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"));
             writer.write(str);
             writer.close();
@@ -50,6 +59,11 @@ public final class Main {
         }
     }
 
+    /**
+     * Returns the current system clipboard contents if it can be parsed to a Java String
+     *
+     * @return the current system clipboard contents
+     */
     private static String getClipboardContents() {
         String fin = null;
         Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
@@ -115,7 +129,7 @@ public final class Main {
 
             final int splitPoint = str.indexOf(" ");
             if (splitPoint <= 0) {
-                errorLog.add("ERROR: line " + i + " does not contain a space");
+                errorLog.add("ERROR: line " + i + " (" + str + ") does not contain a space");
                 continue;
             }
 
