@@ -3,7 +3,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
 import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
@@ -44,15 +43,15 @@ public class Controller {
 
     @FXML
     private void clipboardPivot() {
-        List<Card> cards = stringToAlphabetizedCards(getClipboardContents());
+        pasteFromClipboard();
+        alphabetize();
+        copyToClipboard();
+    }
 
-        if (cards == null) return;
-
-        String fin = "";
-        for (Card card : cards)
-            fin += card + "\n";
-
-        sendToClipboard(fin);
+    @FXML
+    private void clear() {
+        preTextArea.setText("");
+        postTextArea.setText("");
     }
 
     private static class Card implements Comparable<Card> {
@@ -65,8 +64,9 @@ public class Controller {
         }
 
         @Override
-        public int compareTo(Card c) {
-            return name.compareTo(c.name) == 0 ? quantity - c.quantity : name.compareTo(c.name);
+        public int compareTo(Card otherCard) {
+            int compareName = name.compareTo(otherCard.name);
+            return compareName == 0 ? quantity - otherCard.quantity : compareName;
         }
     }
 
@@ -116,22 +116,20 @@ public class Controller {
 
     private static String getClipboardContents() {
         String fin = "";
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable contents = clipboard.getContents(null);
+        Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+        if (contents == null) return null;
 
-        if ((contents != null) && contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+        if (contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
             try {
                 fin = (String) contents.getTransferData(DataFlavor.stringFlavor);
-            } catch (UnsupportedFlavorException | IOException ex) {
-                System.out.println("Exception detected: " + ex);
+            } catch (UnsupportedFlavorException | IOException e) {
+                System.out.println("Exception detected: " + e);
             }
         }
         return fin;
     }
 
     private static void sendToClipboard(String str) {
-        StringSelection stringSelection = new StringSelection(str);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(stringSelection, null);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(str), null);
     }
 }

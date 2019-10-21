@@ -35,26 +35,31 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES"/>
                 <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                    mnemonicParsing="false" onAction="#pasteFromClipboard" prefHeight="25.0" prefWidth="130.0"
-                    text="Paste From Clipboard" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                    mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="25.0" prefWidth="130.0"
-                    text="Copy To Clipboard" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                    GridPane.valignment="CENTER"/>
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                    mnemonicParsing="false" onAction="#clipboardPivot" prefHeight="25.0" prefWidth="130.0"
-                    text="Clipboard Pivot" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-                    GridPane.valignment="CENTER"/>
             <Button fx:id="alphabetizeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                     minWidth="-Infinity" mnemonicParsing="false" onAction="#alphabetize" prefHeight="25.0"
                     prefWidth="80.0" stylesheets="@main.css" text="Alphabetize" GridPane.halignment="CENTER"
-                    GridPane.rowIndex="3" GridPane.valignment="CENTER"/>
+                    GridPane.valignment="CENTER"/>
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    mnemonicParsing="false" onAction="#pasteFromClipboard" prefHeight="25.0" prefWidth="130.0"
+                    text="Paste From Clipboard" GridPane.halignment="CENTER" GridPane.rowIndex="1"
+                    GridPane.valignment="CENTER"/>
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="25.0" prefWidth="130.0"
+                    text="Copy To Clipboard" GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                    GridPane.valignment="CENTER"/>
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    mnemonicParsing="false" onAction="#clipboardPivot" prefHeight="25.0" prefWidth="130.0"
+                    text="Clipboard Pivot" GridPane.halignment="CENTER" GridPane.rowIndex="3"
+                    GridPane.valignment="CENTER"/>
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="80.0" text="Clear"
+                    GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER"/>
         </GridPane>
     </GridPane>
 </AnchorPane>
