@@ -101,8 +101,8 @@ public class Controller {
             card.name = str.substring(1 + splitPoint);
             fin.add(card);
         }
-
-        Collections.sort(fin);
+        
+        fin = mergeSort(fin);
         for (int i = 0; i < fin.size() - 1; i++) {
             Card curCard = fin.get(i);
             Card nextCard = fin.get(i + 1);
@@ -131,5 +131,38 @@ public class Controller {
 
     private static void sendToClipboard(String str) {
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(str), null);
+    }
+
+    private static List<Card> mergeSort(List<Card> cards) {
+        if (cards.size() >= 2) {
+            int leftSize = cards.size() / 2;
+            int rightSize = cards.size() - leftSize;
+            List<Card> left = new ArrayList<>();
+            List<Card> right = new ArrayList<>();
+
+            for (int i = 0; i < leftSize; i++)
+                left.add(cards.get(i));
+
+            for (int i = 0; i < rightSize; i++)
+                right.add(cards.get(i + leftSize));
+
+            return merge(mergeSort(left), mergeSort(right));
+        } else return cards;
+    }
+
+    private static List<Card> merge(List<Card> left, List<Card> right) {
+        List<Card> fin = new ArrayList<>();
+        int a = 0;
+        int b = 0;
+        for (int i = 0; i < (left.size() + right.size()); i++) {
+            if (b >= right.size() || (a < left.size() && left.get(a).compareTo(right.get(b)) < 0)) {
+                fin.add(left.get(a));
+                a++;
+            } else {
+                fin.add(right.get(b));
+                b++;
+            }
+        }
+        return fin;
     }
 }
