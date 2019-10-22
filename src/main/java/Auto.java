@@ -46,19 +46,22 @@ public final class Auto {
     }
 
     /**
-     * If any error messages are stored in the log, output them to a new file called "log.txt".
+     * Creates a logfile and outputs the contents of the error log to said file, unless the error log is empty
+     *
+     * @param noChangeMade whether or not the clipboard was updated
+     * @param clipboard    the string copied to the clipboard
      */
-    private static void printLog(boolean noChangeMade, String text) {
+    private static void printLog(boolean noChangeMade, String clipboard) {
         if (errorLog.size() < 1) return;
         try {
             String str = "";
             for (String logStr : errorLog)
                 str += logStr + "\n";
 
-            if (noChangeMade || text == null)
+            if (noChangeMade || clipboard == null)
                 str += "NO CHANGES MADE TO CLIPBOARD";
             else
-                str += "Current clipboard contents:\n" + text;
+                str += "Current clipboard contents:\n" + clipboard;
             BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt"));
             writer.write(str);
             writer.close();

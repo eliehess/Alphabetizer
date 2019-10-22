@@ -1,4 +1,4 @@
-public class Card implements Comparable<Card> {
+class Card implements Comparable<Card> {
     final String name;
     final int quantity;
 

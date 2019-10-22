@@ -46,6 +46,13 @@ public final class Main extends Application {
         System.exit(0);
     }
 
+    /**
+     * Returns the contents of the system clipboard
+     *
+     * @return the contents of the system clipboard
+     * @throws IOException                if the clipboard cannot be accessed
+     * @throws UnsupportedFlavorException if the clipboard cannot be parsed into a string
+     */
     static String getClipboard() throws IOException, UnsupportedFlavorException {
         String fin = null;
         Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
@@ -56,6 +63,12 @@ public final class Main extends Application {
         return fin;
     }
 
+    /**
+     * Copies the given string to the system clipboard
+     *
+     * @param text the string to be copied to the system clipboard
+     * @return whether or not the clipboard was successfully updated
+     */
     static boolean copyToClipboard(String text) {
         if (text == null || text.trim().length() < 1) return false;
 
