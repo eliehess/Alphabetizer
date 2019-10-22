@@ -15,20 +15,21 @@ public final class Auto {
         try {
             text = Main.getClipboard();
         } catch (IOException e) {
-            errorLog.add("IOException detected: " + e.toString());
+            errorLog.add("IOException detected: " + e.toString() + ".");
         } catch (UnsupportedFlavorException e) {
-            errorLog.add("UnsupportedFlavorException detected: " + e.toString());
+            errorLog.add("UnsupportedFlavorException detected: " + e.toString() + ".");
         }
 
         if (text == null) {
-            errorLog.add("getClipboardContents() returned null");
+            errorLog.add("getClipboardContents() returned null.");
             printLog();
             return;
         }
 
         List<Card> cards = Main.stringToAlphabetizedCards(text);
+        errorLog.addAll(Main.getErrors());
         if (cards == null || cards.size() < 1) {
-            errorLog.add("stringToAlphabetizedCards() returned no cards");
+            errorLog.add("stringToAlphabetizedCards() returned no cards.");
             printLog();
             return;
         }
@@ -38,7 +39,7 @@ public final class Auto {
             text += (card + "\n");
 
         if (text.trim().length() < 1) {
-            errorLog.add("Unable to parse any cards");
+            errorLog.add("Unable to parse any cards.");
             printLog();
             return;
         }
@@ -48,17 +49,17 @@ public final class Auto {
     /**
      * Creates a logfile and outputs the contents of the error log to said file, unless the error log is empty
      *
-     * @param noChangeMade whether or not the clipboard was updated
+     * @param clipboardUpdated whether or not the clipboard was updated
      * @param clipboard    the string copied to the clipboard
      */
-    private static void printLog(boolean noChangeMade, String clipboard) {
+    private static void printLog(boolean clipboardUpdated, String clipboard) {
         if (errorLog.size() < 1) return;
         try {
             String str = "";
             for (String logStr : errorLog)
                 str += logStr + "\n";
 
-            if (noChangeMade || clipboard == null)
+            if (!clipboardUpdated || clipboard == null)
                 str += "NO CHANGES MADE TO CLIPBOARD";
             else
                 str += "Current clipboard contents:\n" + clipboard;

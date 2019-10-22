@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 public final class Main extends Application {
     private static final int WIDTH = 750;
     private static final int HEIGHT = 516 + 24;
+    private static List<String> errors = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -84,22 +85,29 @@ public final class Main extends Application {
      * @return an alphabetized List.
      */
     static List<Card> stringToAlphabetizedCards(String input) {
+        errors = new ArrayList<>();
         List<Card> fin = new ArrayList<>();
 
         final String delimiter = "&";
-        if (input.contains(delimiter)) return null;
+        if (input.contains(delimiter)) {
+            errors.add("ERROR: Input contains prohibited character " + delimiter + ".");
+            return null;
+        }
 
         StringTokenizer tokens = new StringTokenizer(input.replaceAll("\\r", "")
                 .replaceAll("\\n", delimiter), delimiter);
 
+        int i = 0;
         while (tokens.hasMoreTokens()) {
             String str = tokens.nextToken();
             int quantity;
             String name;
 
             final int splitPoint = str.indexOf(" ");
-            if (splitPoint <= 0)
+            if (splitPoint <= 0) {
+                errors.add("ERROR: line " + i + " (" + str + ") does not contain a space and was ignored.");
                 continue;
+            }
 
             String cardNum = str.substring(0, splitPoint);
             if (cardNum.substring(cardNum.length() - 1).equals("x"))
@@ -108,12 +116,13 @@ public final class Main extends Application {
             try {
                 quantity = Integer.parseInt(cardNum);
             } catch (NumberFormatException e) {
-                System.out.println("NumberFormatException detected: " + e);
+                errors.add("ERROR: Line " + i + "does not contain a properly-formatted number and was ignored.");
                 continue;
             }
 
             name = str.substring(1 + splitPoint);
             fin.add(new Card(name, quantity));
+            i++;
         }
 
         return mergeSort(fin);
@@ -187,5 +196,9 @@ public final class Main extends Application {
             }
         }
         return fin;
+    }
+
+    static List<String> getErrors() {
+        return errors;
     }
 }

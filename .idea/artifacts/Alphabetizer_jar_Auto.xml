@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Alphabetizer:jar_Auto">
+    <output-path>$PROJECT_DIR$/out/artifacts/Alphabetizer_jar_Auto</output-path>
+    <root id="archive" name="Alphabetizer.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/Auto/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="Alphabetizer" />
+    </root>
+  </artifact>
+</component>
