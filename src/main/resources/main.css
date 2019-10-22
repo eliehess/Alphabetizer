@@ -12,6 +12,24 @@
     -fx-background-color: transparent;
 }
 
+.button {
+    -fx-background-color: linear-gradient(#c4daff, #99beff);
+    -fx-border-color: black;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-insets: 0;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#99beff, #5e99ff);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 1);
+}
+
 #alphabetizeButton {
-    -fx-background-color: #159633;
+    -fx-background-color: linear-gradient(#15b433, #159633);
+}
+
+#alphabetizeButton:hover {
+    -fx-background-color: linear-gradient(#159633, #156f33);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 1);
 }

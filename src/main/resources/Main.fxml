@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
@@ -9,10 +10,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<?import java.net.URL?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0"
             prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller">
+            fx:controller="Controller" stylesheets="@main.css">
     <ImageView fitHeight="516.0" fitWidth="750.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
         <Image url="@background.jpg"/>
     </ImageView>
@@ -44,26 +44,22 @@
             </rowConstraints>
             <Button fx:id="alphabetizeButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                     minWidth="-Infinity" mnemonicParsing="false" onAction="#alphabetize" prefHeight="25.0"
-                    prefWidth="80.0" text="Alphabetize" GridPane.halignment="CENTER"
-                    GridPane.valignment="CENTER"/>
+                    prefWidth="135.0" text="Alphabetize" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                    mnemonicParsing="false" onAction="#pasteFromClipboard" prefHeight="25.0" prefWidth="130.0"
+                    mnemonicParsing="false" onAction="#pasteFromClipboard" prefHeight="25.0" prefWidth="135.0"
                     text="Paste From Clipboard" GridPane.halignment="CENTER" GridPane.rowIndex="1"
                     GridPane.valignment="CENTER"/>
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                    mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="25.0" prefWidth="130.0"
+                    mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="25.0" prefWidth="135.0"
                     text="Copy To Clipboard" GridPane.halignment="CENTER" GridPane.rowIndex="2"
                     GridPane.valignment="CENTER"/>
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                    mnemonicParsing="false" onAction="#clipboardPivot" prefHeight="25.0" prefWidth="130.0"
+                    mnemonicParsing="false" onAction="#clipboardPivot" prefHeight="25.0" prefWidth="135.0"
                     text="Clipboard Pivot" GridPane.halignment="CENTER" GridPane.rowIndex="3"
                     GridPane.valignment="CENTER"/>
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                    mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="80.0" text="Clear"
+                    mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="135.0" text="Clear"
                     GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER"/>
         </GridPane>
     </GridPane>
-    <stylesheets>
-        <URL value="@main.css"/>
-    </stylesheets>
 </AnchorPane>

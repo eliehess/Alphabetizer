@@ -14,7 +14,7 @@ public final class Auto {
 
         try {
             text = Main.getClipboard();
-        }  catch (IOException e) {
+        } catch (IOException e) {
             errorLog.add("IOException detected: " + e.toString());
         } catch (UnsupportedFlavorException e) {
             errorLog.add("UnsupportedFlavorException detected: " + e.toString());
@@ -27,7 +27,7 @@ public final class Auto {
         }
 
         List<Card> cards = Main.stringToAlphabetizedCards(text);
-        if(cards == null || cards.size() < 1) {
+        if (cards == null || cards.size() < 1) {
             errorLog.add("stringToAlphabetizedCards() returned no cards");
             printLog();
             return;

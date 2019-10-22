@@ -112,7 +112,7 @@ public final class Main extends Application {
      * @param cards the list of Cards to be sorted.
      * @return the sorted list.
      */
-    static List<Card> mergeSort(List<Card> cards) {
+    private static List<Card> mergeSort(List<Card> cards) {
         if (cards.size() < 2) return cards;
 
         int leftSize = cards.size() / 2;
